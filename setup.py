@@ -12,7 +12,7 @@ Just install this package and call fvsd.py new <project-name> to get started.
 
 setup(
     name='fvsd',
-    version='1.0',
+    version='1.0.1',
     description="Flask+VueJS+SemanticUI+Docker CLI boilerplate.",
     long_description=long_description,
     author='Italo Maia',
