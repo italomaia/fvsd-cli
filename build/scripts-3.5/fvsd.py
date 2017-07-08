@@ -19,20 +19,24 @@ def call_new(name):
         'Invalid project name. Accepted characters are [a-z],-'
     assert cmd_exists('git'), 'Please, install git. It is required.'
 
-    print('downloading remote resources')
-    filename, headers = urllib.request.urlretrieve('https://codeload.github.com/italomaia/flask-vue-semantic-docker/zip/master')
+    print('Creating a vue+flask+semantic-ui+docker project ...')
+    print('Downloading remote resources')
+    remote_source = 'https://codeload.github.com/italomaia/flask-vue-semantic-docker/zip/master'
+    filename, headers = urllib.request.urlretrieve(remote_source)
 
-    print('unzipping')
+    print('UnZipping')
     zfile = zipfile.ZipFile(filename)
     namelist = zfile.namelist()
     commonprefix = os.path.commonprefix(namelist)
     tmp_dir = tempfile.mkdtemp()
     zfile.extractall(tmp_dir)
     zfile.close()
-    print('copying')
+
+    print('Moving files')
     source = os.path.join(tmp_dir, commonprefix)
     shutil.move(source, name)
     shutil.rmtree(tmp_dir)
+    print('All done!')
     print('Enjoy your project! \nps: run setup.sh ;)')
 
 
@@ -42,6 +46,12 @@ def main(args):
             call_new(args[1])
         else:
             print('command not found')
+    if len(args) == 1:
+        if args[0] == 'help':
+            print('''
+new <name>  # creates a new project
+help  # this help
+'''.strip())
     else:
         print('command not found')
 
