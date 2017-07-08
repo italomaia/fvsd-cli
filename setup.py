@@ -12,6 +12,5 @@ setup(
     author='Italo Maia',
     author_email='italo.maia@gmail.com',
     url='https://github.com/italomaia/fvsd-cli',
-    install_requires=[],
     scripts=['fvsd.py'],
 )
