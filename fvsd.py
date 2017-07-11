@@ -37,7 +37,7 @@ def call_new(name):
     shutil.move(source, name)
     shutil.rmtree(tmp_dir)
     print('All done!')
-    print('Enjoy your project! \nps: run setup.sh ;)')
+    print('Now, inside your project, run: "fab setup"')
 
 
 def main(args):
@@ -46,7 +46,7 @@ def main(args):
             call_new(args[1])
         else:
             print('command not found')
-    if len(args) == 1:
+    elif len(args) == 1:
         if args[0] == 'help':
             print('''
 new <name>  # creates a new project
