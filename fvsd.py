@@ -6,6 +6,7 @@ import zipfile
 import os.path
 import tempfile
 import urllib.request
+from subprocess import run
 
 c_prj_name = re.compile(r'^[a-z\-]+$')
 
@@ -36,8 +37,17 @@ def call_new(name):
     source = os.path.join(tmp_dir, commonprefix)
     shutil.move(source, name)
     shutil.rmtree(tmp_dir)
-    print('All done!')
-    print('Now, inside your project, run: "fab setup"')
+    os.chdir(name)
+    print('Finished.')
+
+    if cmd_exists('fab'):
+        print(
+            "Fabric was found in your path. Continuing setup ... "
+            "please, wait")
+        run(['fab', 'setup'])
+    else:
+        print("Fabric could not be found in your PATH.")
+        print("Please, run \"fab setup\" manually after installing it.")
 
 
 def main(args):
