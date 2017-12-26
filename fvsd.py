@@ -1,11 +1,16 @@
 #!/usr/bin/python3
-import re
-import sys
-import shutil
-import zipfile
+
+'''
+CLI boilerplate for the Flask+VueJS+SemanticUI+Nginx+Docker project
+'''
+
+import argparse
 import os.path
+import re
+import shutil
 import tempfile
 import urllib.request
+import zipfile
 from subprocess import run
 
 c_prj_name = re.compile(r'^[a-z\-]+$')
@@ -50,21 +55,29 @@ def call_new(name):
         print("Please, run \"fab setup\" manually after installing it.")
 
 
-def main(args):
-    if len(args) == 2:
-        if args[0] == 'new':
-            call_new(args[1])
-        else:
-            print('command not found')
-    elif len(args) == 1:
-        if args[0] == 'help':
-            print('''
-new <name>  # creates a new project
-help  # this help
-'''.strip())
+def print_help_message():
+    print(
+        'new <name>  # creates a new project\n'
+        'help  # this help')
+
+
+def get_parser():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        '-n', '--new', dest='name', nargs=1, type=str,
+        help='creates a FVSD project with given name')
+    return parser
+
+
+def main():
+    parser = get_parser()
+    args = parser.parse_args()
+
+    if args.name:
+        call_new(args.name)
     else:
-        print('command not found')
+        parser.print_help()
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main()
