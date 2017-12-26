@@ -9,11 +9,11 @@ import os.path
 import re
 import shutil
 import tempfile
-import urllib.request
 import zipfile
 from subprocess import run
+from urllib.request import urlretrieve  # py3
 
-c_prj_name = re.compile(r'^[a-z\-]+$')
+c_prj_name = re.compile(r'^[a-z][a-z0-9\-]*$')
 
 
 def cmd_exists(cmd):
@@ -28,7 +28,7 @@ def call_new(name):
     print('Creating a vue+flask+semantic-ui+docker project ...')
     print('Downloading remote resources')
     remote_source = 'https://codeload.github.com/italomaia/flask-vue-semantic-docker/zip/master'
-    filename, headers = urllib.request.urlretrieve(remote_source)
+    filename, headers = urlretrieve(remote_source)
 
     print('UnZipping')
     zfile = zipfile.ZipFile(filename)
@@ -55,16 +55,10 @@ def call_new(name):
         print("Please, run \"fab setup\" manually after installing it.")
 
 
-def print_help_message():
-    print(
-        'new <name>  # creates a new project\n'
-        'help  # this help')
-
-
 def get_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        '-n', '--new', dest='name', nargs=1, type=str,
+        '-n', '--new', dest='name', type=str, action='store',
         help='creates a FVSD project with given name')
     return parser
 
