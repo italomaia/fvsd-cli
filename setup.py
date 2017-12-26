@@ -21,7 +21,7 @@ else:
 
 setup(
     name='fvsd',
-    version='1.0.3',
+    version='1.0.4',
     description="Flask+VueJS+SemanticUI+Docker CLI boilerplate.",
     long_description=long_description,
     author='Italo Maia',
