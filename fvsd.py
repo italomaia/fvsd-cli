@@ -20,14 +20,14 @@ def cmd_exists(cmd):
     return shutil.which(cmd) != ''
 
 
-def call_new(name):
+def call_new(name, branch):
     assert c_prj_name.match(name), '' \
         'Invalid project name. Accepted characters are [a-z],-'
     assert cmd_exists('git'), 'Please, install git. It is required.'
 
     print('Creating a vue+flask+semantic-ui+docker project ...')
     print('Downloading remote resources')
-    remote_source = 'https://codeload.github.com/italomaia/flask-vue-semantic-docker/zip/master'
+    remote_source = f'https://codeload.github.com/italomaia/flask-vue-semantic-docker/zip/{branch}'
     filename, headers = urlretrieve(remote_source)
 
     print('UnZipping')
@@ -60,6 +60,9 @@ def get_parser():
     parser.add_argument(
         '-n', '--new', dest='name', type=str, action='store',
         help='creates a FVSD project with given name')
+    parser.add_argument(
+        '-b', '--branch', dest='branch', type=str, action='store',
+        default='master', help='clone from a non-default branch')
     return parser
 
 
@@ -68,7 +71,7 @@ def main():
     args = parser.parse_args()
 
     if args.name:
-        call_new(args.name)
+        call_new(args.name, args.branch)
     else:
         parser.print_help()
 
