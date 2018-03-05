@@ -5,7 +5,7 @@ CLI boilerplate for the Flask+VueJS+SemanticUI+Nginx+Docker project
 '''
 
 import argparse
-import os.path
+import os
 import re
 import shutil
 import tempfile
@@ -37,6 +37,9 @@ def call_new(name, branch):
     tmp_dir = tempfile.mkdtemp()
     zfile.extractall(tmp_dir)
     zfile.close()
+
+    # clean up after ourselves
+    os.remove(filename)
 
     print('Moving files')
     source = os.path.join(tmp_dir, commonprefix)
