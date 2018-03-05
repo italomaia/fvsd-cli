@@ -2,7 +2,7 @@
 
 ## version 1.1.1
 
-- removing downloaded files activly
+- removing downloaded files actively
 
 ## version 1.1
 
